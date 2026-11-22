@@ -1,14 +1,47 @@
-:root{color-scheme:dark}
+:root{color-scheme:dark;--gold:#ffc94a;--gold-hi:#ffe49a;--lilac:#c79cf0;--felt:#0d4a33}
 *{box-sizing:border-box}
 html,body{margin:0;min-height:100%}
-body{background:#201923;color:#f6eefc;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;display:grid;place-items:center;min-height:100vh}
-.launch{display:flex;flex-wrap:wrap;gap:24px;justify-content:center;padding:32px}
-.launch-card{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;width:300px;height:300px;border-radius:28px;overflow:hidden;background:#2c2330;border:2px solid #4a3d52;color:inherit;text-decoration:none;transition:transform .15s ease,border-color .15s ease,background .15s ease}
-.launch-card:hover,.launch-card:focus-visible{transform:translateY(-4px);border-color:#c79cf0;background:#332839;outline:none}
-.launch-art{font-size:72px;line-height:1}
-.launch-card b{font-size:20px;text-align:center;padding:0 20px;line-height:1.25}
-/* picture tile: the square art fills the card, the label sits on a dark band at the bottom */
-.launch-card.pic{justify-content:flex-end;padding:0}
-.launch-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
-.launch-card.pic b{position:relative;width:100%;padding:44px 16px 20px;background:linear-gradient(transparent,rgba(16,9,20,.92) 62%);text-shadow:0 2px 6px rgba(0,0,0,.6)}
-@media (max-width:600px){.launch-card{width:min(300px,88vw);height:min(300px,88vw)}}
+::selection{background:rgba(199,156,240,.35)}
+body{min-height:100vh;display:grid;place-items:center;overflow-x:hidden;-webkit-font-smoothing:antialiased;-webkit-tap-highlight-color:transparent;color:#f6eefc;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;background:radial-gradient(ellipse 70% 55% at 50% 0%,rgba(199,156,240,.2),transparent 70%),radial-gradient(ellipse 60% 50% at 50% 100%,rgba(255,201,74,.12),transparent 70%),radial-gradient(rgba(246,238,252,.07) 1px,transparent 1.3px) 0 0/22px 22px,#201923}
+.launch{display:flex;flex-wrap:wrap;gap:clamp(16px,3vw,28px);justify-content:center;align-items:center;padding:clamp(20px,5vw,40px);width:100%}
+
+/* cards */
+.launch-card{position:relative;isolation:isolate;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;width:300px;height:300px;border-radius:28px;overflow:hidden;background:#2c2330;border:2px solid #4a3d52;color:inherit;text-decoration:none;box-shadow:0 18px 40px -18px rgba(0,0,0,.75),inset 0 1px 0 rgba(255,255,255,.06);transition:transform .35s cubic-bezier(.2,.8,.2,1),border-color .25s ease,box-shadow .35s ease;animation:rise .7s cubic-bezier(.2,.8,.2,1) backwards}
+.launch-card:nth-child(2){animation-delay:.12s}
+.launch-card:hover,.launch-card:focus-visible{transform:translateY(-6px);border-color:var(--lilac);box-shadow:0 28px 60px -20px rgba(0,0,0,.85),0 0 0 6px rgba(199,156,240,.12),inset 0 1px 0 rgba(255,255,255,.08);outline:none}
+.launch-card:active{transform:translateY(-1px) scale(.985);transition-duration:.1s}
+.launch-card:focus-visible{box-shadow:0 0 0 3px #201923,0 0 0 6px var(--gold)}
+.launch-card::after{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;background:linear-gradient(115deg,transparent 35%,rgba(255,255,255,.2) 50%,transparent 65%);transform:translateX(-120%);transition:transform .9s ease}
+.launch-card:hover::after{transform:translateX(120%)}
+@keyframes rise{from{opacity:0;transform:translateY(18px) scale(.98)}}
+
+/* Dad Mode: felt-green tile to match its suit icon */
+.launch-card.dad{background:radial-gradient(circle at 50% 0%,#1d7a52,#0d4a33 55%,#0a3a28);border-color:#2a6b4d}
+.launch-card.dad:hover,.launch-card.dad:focus-visible{border-color:var(--gold)}
+
+/* Dad Mode icon: gold spade in a felt medallion with a turning dashed ring */
+.launch-art{position:relative;z-index:1;display:grid;place-items:center;width:128px;height:128px;border-radius:50%;background:radial-gradient(circle at 32% 24%,#2f8a60,#0d4a33 62%,#082e20);box-shadow:inset 0 0 0 2px rgba(255,228,154,.35),inset 0 -12px 24px rgba(0,0,0,.3),0 14px 30px rgba(0,0,0,.45);transition:transform .5s cubic-bezier(.2,.8,.2,1)}
+.launch-art::before{content:"";position:absolute;inset:-11px;border-radius:50%;border:1.5px dashed rgba(255,201,74,.4);animation:spin 22s linear infinite}
+.launch-art svg{width:72px;height:72px;overflow:visible;filter:drop-shadow(0 4px 6px rgba(0,0,0,.45));transition:transform .5s cubic-bezier(.2,.8,.2,1)}
+.launch-card.dad:hover .launch-art{transform:rotate(-8deg) scale(1.06)}
+.launch-card.dad:hover .launch-art svg{transform:scale(1.08)}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* Cool Cat tile: photo with a label band and a cat badge */
+.launch-card.pic{justify-content:flex-end;padding:0;background:#1a1420}
+.launch-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;transition:transform .7s cubic-bezier(.2,.8,.2,1)}
+.launch-card.pic:hover .launch-img{transform:scale(1.06)}
+.launch-badge{position:absolute;z-index:1;top:14px;left:14px;display:grid;place-items:center;width:58px;height:58px;border-radius:18px;color:var(--gold-hi);background:rgba(20,12,24,.62);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.2);box-shadow:0 10px 22px rgba(0,0,0,.35);transition:transform .35s cubic-bezier(.2,.8,.2,1)}
+.launch-badge svg{width:38px;height:38px;overflow:visible;filter:drop-shadow(0 2px 3px rgba(0,0,0,.4))}
+.launch-card.pic:hover .launch-badge{transform:rotate(-7deg) scale(1.08)}
+.launch-card.pic b{position:relative;z-index:1;width:100%;padding:56px 18px 22px;background:linear-gradient(transparent,rgba(16,9,20,.94) 62%);text-shadow:0 2px 8px rgba(0,0,0,.6)}
+
+/* corner signature */
+.sig{position:fixed;right:clamp(14px,2.5vw,28px);bottom:clamp(12px,2vw,22px);font-family:Fraunces,Georgia,serif;font-weight:800;font-size:15px;letter-spacing:.08em;color:rgba(246,238,252,.5);pointer-events:none;user-select:none}
+
+/* labels */
+.launch-card b{position:relative;z-index:1;font-family:Fraunces,Georgia,serif;font-weight:800;font-size:22px;line-height:1.2;letter-spacing:.005em;text-align:center;text-wrap:balance;padding:0 22px}
+
+@media (max-width:600px){.launch-card{width:min(300px,86vw);height:min(300px,86vw)}.launch-card b{font-size:20px}}
+
+@media (prefers-reduced-motion:reduce){.launch-card,.launch-card::after,.launch-card *,.launch-card::before{animation:none!important;transition:none!important}}
